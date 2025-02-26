@@ -2,9 +2,12 @@ class PostsController < ApplicationController
   def index
     the_id = params.fetch("path_id")
     @board = Board.where({ :id => the_id }).at(0)
-    matching_posts = Post.where({ :board_id => the_id })
+    active = Post.where({ :board_id => the_id}).where("expires_on > ?", Date.today)
+    inactive = Post.where({ :board_id => the_id}).where("expires_on <= ?", Date.today)
 
-    @list_of_posts = matching_posts.order({ :created_at => :desc })
+    @active_posts = active.order({ :created_at => :desc })
+    @inactive_posts = inactive.order({ :created_at => :desc })
+
 
     render({ :template => "posts/index" })
   end

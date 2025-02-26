@@ -25,6 +25,7 @@ Rails.application.routes.draw do
           
   # READ
   get("/", { :controller => "boards", :action => "index" })
+  get("/boards", { :controller => "boards", :action => "index" })
   
   get("/boards/:path_id", { :controller => "posts", :action => "index" })
   
